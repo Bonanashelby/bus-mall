@@ -1,5 +1,5 @@
 'use strict';
-
+//working with Kayla and Caleb so our code may look similar
 var picOne = newPicture();
 
 var img = [
