@@ -7,8 +7,8 @@ var img = [
 
 var previousImgs = [];
 
-function randomNum() {
-  Math.random
+function randomNum(){
+  return Math.floor(Math.floor(Math.random() * (20 - 1 + 1) + 1));
 };
 
 var allProducts = [];
@@ -27,5 +27,5 @@ var rightIndex = randomNum();
 while(rightIndex === leftIndex || rightIndex === centerIndex){
   var rightIndex = randomNum();
 }
-var rightImg = allProducts[leftIndex];
-previousImgs.push(leftIndex);
+var rightImg = allProducts[rightIndex];
+previousImgs.push(rightIndex);
