@@ -133,8 +133,25 @@ if (totalClicks === 25) {
 
   }
 }
+
+/* CLASS NOTES - 2/22 - below displayList();
+
+  }else{
+    displayList();
+    saveProductsToLocalStorage(allProducts);
+  }
+}
+function saveProductsToLocalStorage(){
+  localStorage.allProducts = JSON.stringify(allProducts);
+  console.log("saved to local storage");
+}
+
+imgContainer.addEventListener('click', handleImagesOnClick);
+displayImgs();
+
+*/
 /*
-//CLASS NOTES BEGIN HERE
+//CLASS NOTES 2/21 BEGIN HERE
 //define the variables to access the elements from the DOM.
 var imgContainer = document.getElementById('imgContainer');
 var left = document.getElementById('left');
