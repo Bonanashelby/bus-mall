@@ -12,6 +12,13 @@
     <div id=right></div>
     </section>
 
+    <div id="vote"></div>
+      <script>document.getElementById("vote").addEventListener("click", function(event) {
+        // display the current click count inside the clicked div
+      event.target.innerHTML = "click count: " + event.detail;
+      }, false);
+      </script>
+
     <script src="app.js" type="text/javascript"></script>
   </body>
 </html>
