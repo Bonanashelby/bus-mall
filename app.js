@@ -58,12 +58,16 @@ function randomNum(){
   return Math.floor(Math.random() * productNames.length);
 };
 
+//function to display clicks, views and names
 function displayFinalResults() {
   console.log('displayFinalResults');
   for (var i = 0; i < allProducts.length; i++) {
+    //var productClicksEl is the bucket to catch the document.createElement('li') which is the list in the html
     var productClicksEl = document.createElement('li');
     console.dir(productClicksEl);
+    //clicks is the child to productClicksEl
     clicks.appendChild(productClicksEl);
+    //productClicksEl.textContent is the bucket for the allProducts[i] object that has views, names & clicks
     productClicksEl.textContent = allProducts[i].name + ': clicks ' + allProducts[i].clicks + ', views ' + allProducts[i].views;
   }
 }
@@ -137,6 +141,7 @@ function handleImagesOnClick(event) {
 
   if (totalClicks >= 25) {
     imgContainer.removeEventListener('click', handleImagesOnClick);
+    //connected to function displayFinalResults up top
     displayFinalResults();
   }
 }
@@ -157,99 +162,3 @@ imgContainer.addEventListener('click', handleImagesOnClick);
 displayImgs();
 
 */
-/*
-//CLASS NOTES 2/21 BEGIN HERE
-//define the variables to access the elements from the DOM.
-var imgContainer = document.getElementById('imgContainer');
-var left = document.getElementById('left');
-var center = document.getElementById('center');
-var right = document.getElementById('right');
-
-//define global variables
-var totalClicks = 0;
-var clickLimits = 25;
-
-var allProducts = [];
-var currentlyShowing = [];
-
-//store all image names in an array
-var imgNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck',
-'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep','tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
-
-//define the product constructor
-function Product(name) {
-  this.name = name,
-  this.views = 0,
-  this.clicks = 0,
-  this.path = 'img/ ' + name + '.jpg';
-};
-
-//create the array of all products
-for (var i = 0; i < imgNames.length; i++) {
-  allProducts.push(new Product(imgNames[i]));
-}
-// picNames[i] first thing, then new Product, then it’ll push to allProducts
-
-//generate a random number for accessing each product in the allProducs array.
-function randNum() {return Math.floor(Math.random() * allProducts.length);
-}
-
-//the primary function to display new images
-function displayImgs () {
-  var leftIndex = randNum();
-  var centerIndex = randNum ();
-  var rightIndex = randNum ();
-
-  console.log('Starting left index: ', leftIndex);
-  console.log('Starting center index: ', centerIndex);
-  console.log('Starting right index: ', rightIndex);
-  while (currentlyShowing.include(leftIndex)) {
-    leftIndex = randNum ();
-  }
-
-  while ( centerIndex === leftIndex || currentlyShowing.includes(centerIndex)) {
-    CenterIndex = randNum ();
-    console.log('New left: ', leftIndex);
-  }
-
-  while (rightIndex === leftIndex || rightIndex === centerIndex || currentlyShowing.includes(rightIndex)) {
-    rightIndex = ranNum();
-    console.log('New center: ', centerIndex);
-    console.log('New right: ', rightIndex);
-  }
-
-  var leftProduct = allProducts[leftIndex];
-  leftProduct.views += 1;
-
-  left.removeChild(left);
-  leftImg = document.createElement('img');
-  left.setAttribute('src', leftProduct.path);
-  left.setAttribute('alt', leftProduct.name);
-  left.appendChild(left);
-  //left.src= ;
-  //console.log(allProducts[leftIndex].name + ‘has been shown ‘ + allProducts[leftIndex].views + ‘ times’);
-
-  var centerProduct = allProducts[centerIndex];
-  centerProduct.views += 1;
-
-  center.removeChild(center);
-  centerImg = document.createElement('img');
-  center.setAttribute('src', centerProduct.path);
-  center.setAttribute('alt', centerProduct.name);
-  center.appendChild(center);
-  //center.src= ;
-  //console.log(allProducts[centerIndex].name + ‘has been shown ‘ + allProducts[centerIndex].views + ‘ times’);
-
-  var rightProduct = allProducts[rightIndex];
-  rightProduct.views += 1;
-
-  right.removeChild(right);
-  rightImg = document.createElement('img');
-  right.setAttribute('src', rightProduct.path);
-  right.setAttribute('alt', rightProduct.name);
-  right.appendChild(right);
-  //right.src= ;
-  //console.log(allProducts[rightIndex].name + ‘has been shown ‘ + allProducts[rightIndex].views + ‘ times’);
-
-  currentlyShowing = [leftIndex, centerIndex, rightIndex];
-}*/
