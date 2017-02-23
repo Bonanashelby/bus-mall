@@ -7,41 +7,68 @@ var imgContainer = document.getElementById('img-container');
 var leftEl = document.getElementById('left');
 var centerEl = document.getElementById('center');
 var rightEl = document.getElementById('right');
-var list = document.getElementById('list');
-
-//var img = [
-//  './img/bag.jpg', './img/banana.jpg', './img/bathroom.jpg', './img/boots.jpg', './img/breakfast.jpg', './img/tauntaun.jpg', './img/wine-glass.jpg', './img/bubblegum.jpg', './img/chair.jpg', './img/cthulhu.jpg', './img/dog-duck.jpg', './img/dragon.jpg', './img/unicorn.jpg', './img/usb.gif', './img/pen.jpg', './img/pet-sweep.jpg', './img/scissors.jpg', './img/shark.jpg', './img/sweep.png', './img/water-can.jpg'];
+var clicks = document.getElementById('clicks');
 
 var allProducts = [];
 var totalClicks = 0;
 var clickLimits = 25;
 var previousImgs = [];
 
-var productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'tauntaun',
-  'wine-glass', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'unicorn',
-  'usb', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'water-can'];
+var productNames = [
+  { name: 'bag', path: './img/bag.jpg' },
+  { name: 'banana', path: './img/banana.jpg' },
+  { name: 'bathroom', path: './img/bathroom.jpg'},
+  { name: 'boots', path: './img/boots.jpg'},
+  { name: 'breakfast', path: './img/breakfast.jpg'},
+  { name: 'tauntaun', path: './img/tauntaun.jpg'},
+  { name: 'wine-glass', path: './img/wine-glass.jpg'},
+  { name: 'bubblegum', path: './img/bubblegum.jpg'},
+  { name: 'chair', path: './img/chair.jpg'},
+  { name: 'cthulhu', path: './img/cthulhu.jpg'},
+  { name: 'dog-duck', path: './img/dog-duck.jpg'},
+  { name: 'dragon', path: './img/dragon.jpg'},
+  { name: 'unicorn', path: './img/unicorn.jpg'},
+  { name: 'usb', path: './img/usb.gif'},
+  { name: 'pen', path: './img/pen.jpg'},
+  { name: 'pet-sweep', path: './img/pet-sweep.jpg'},
+  { name: 'scissors', path: './img/scissors.jpg'},
+  { name: 'shark', path: './img/shark.jpg'},
+  { name: 'sweep', path: './img/sweep.png'},
+  { name: 'water-can', path: './img/water-can.jpg'}
+];
 
 //product constructor
-function product(name, id, path){
+function Product(name, path){
   this.name = name;
   this.views = 0;
   this.clicks = 0;
-  this.path = 'img/' + name + '.jpg';
+  this.path = path;
 };
 //create function for all products & push to their array
 function createProducts(){
   for (var i = 0; i < productNames.length; i++) {
-    var name = productNames[i];
-    var newItem = new Product(name);
+    var productInfo = productNames[i];
+    var newItem = new Product(productInfo.name, productInfo.path);
     allProducts.push(newItem);
   }
+  console.log('allProducts: ', allProducts);
 }
 
-function randNum(){
+function randomNum(){
   return Math.floor(Math.random() * productNames.length);
 };
 
-function displayImgs() {
+function displayFinalResults() {
+  console.log('displayFinalResults');
+  for (var i = 0; i < allProducts.length; i++) {
+    var productClicksEl = document.createElement('li');
+    console.dir(productClicksEl);
+    clicks.appendChild(productClicksEl);
+    productClicksEl.textContent = allProducts[i].name + ': clicks ' + allProducts[i].clicks + ', views ' + allProducts[i].views;
+  }
+}
+
+function generateImg() {
   var leftIndex = randomNum();
   var centerIndex = randomNum();
   var rightIndex = randomNum();
@@ -69,38 +96,19 @@ function displayImgs() {
 
   console.log(previousImgs);
 
-/*
-var leftIndex = randNum();
-var leftImg = allProducts[leftIndex];
-previousImgs.push(leftIndex);
-
-var centerIndex = randNum();
-while (centerIndex === leftIndex) {
-  centerIndex = randNum();
-}
-var centerImg = allProducts[centerIndex];
-previousImgs.push(centerIndex);
-
-var rightIndex = randNum();
-while(rightIndex === leftIndex || rightIndex === centerIndex){ var rightIndex = randNum();
-}
-
-var rightImg = allProducts[rightIndex];
-previousImgs.push(rightIndex);
-*/
   var leftImgElement = document.createElement('img');
-  leftImgElement.setAttribute('src', [allProducts[previousImgs[0]].path]);
-  leftImgElement.setAttribute('alt',[allProducts[previousImgs[0]].name]);
+  leftImgElement.setAttribute('src', allProducts[previousImgs[0]].path);
+  leftImgElement.setAttribute('alt',allProducts[previousImgs[0]].name);
   imgContainer.appendChild(leftImgElement);
 
   var centerImgElement = document.createElement('img');
-  centerImgElement.setAttribute('src', [allProducts[previousImgs[1]].path]);
-  centerImgElement.setAttribute('id', [allProducts[previousImgs[1]].name]);
+  centerImgElement.setAttribute('src', allProducts[previousImgs[1]].path);
+  centerImgElement.setAttribute('id', allProducts[previousImgs[1]].name);
   imgContainer.appendChild(centerImgElement);
 
   var rightImgElement = document.createElement('img');
-  rightImgElement.setAttribute('src', [allProducts[previousImgs[2]].path]);
-  rightImgElement.setAttribute('id', [allProducts[previousImgs[2]].name]);
+  rightImgElement.setAttribute('src', allProducts[previousImgs[2]].path);
+  rightImgElement.setAttribute('id', allProducts[previousImgs[2]].name);
   imgContainer.appendChild(rightImgElement);
 }
 //returns previousImgs:
@@ -112,10 +120,11 @@ generateImg();
 imgContainer.addEventListener('click', handleImagesOnClick);
 //event listener for one box with all 3 imgNames
 function handleImagesOnClick(event) {
-  console.log(event.target.alt);
+  console.log(event);
   for (var j = 0; j < allProducts.length; j++) {
     if (event.target.alt === allProducts[j].name) {
       allProducts[j].clicks += 1;
+      console.log('allProducts[j]:', allProducts[j]);
     }
   }
 
@@ -125,12 +134,10 @@ function handleImagesOnClick(event) {
 
   console.log('Total Clicks: ' + totalClicks);
   generateImg();
-}
 
-if (totalClicks === 25) {
-  imgContainer.removeEventListener();
-  for (var t = 0; t < allProducts.length; t++) {
-
+  if (totalClicks >= 25) {
+    imgContainer.removeEventListener('click', handleImagesOnClick);
+    displayFinalResults();
   }
 }
 
