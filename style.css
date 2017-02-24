@@ -1,5 +1,12 @@
 .img-container {
 width: 20%;
+min-width: 50px;
+display: inline-block;
+}
+
+canvas{
+  width: 75%;
+  min-width: 400px;
 }
 
 /*

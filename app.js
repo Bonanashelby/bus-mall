@@ -103,16 +103,19 @@ function generateImg() {
   var leftImgElement = document.createElement('img');
   leftImgElement.setAttribute('src', allProducts[previousImgs[0]].path);
   leftImgElement.setAttribute('alt',allProducts[previousImgs[0]].name);
+  allProducts[previousImgs[0]].views++;
   imgContainer.appendChild(leftImgElement);
 
   var centerImgElement = document.createElement('img');
   centerImgElement.setAttribute('src', allProducts[previousImgs[1]].path);
   centerImgElement.setAttribute('id', allProducts[previousImgs[1]].name);
+  allProducts[previousImgs[1]].views++;
   imgContainer.appendChild(centerImgElement);
-
+  //allProducts[previousImgs[2]].views++ It recog it and says I've already seen it
   var rightImgElement = document.createElement('img');
   rightImgElement.setAttribute('src', allProducts[previousImgs[2]].path);
   rightImgElement.setAttribute('id', allProducts[previousImgs[2]].name);
+  allProducts[previousImgs[2]].views++;
   imgContainer.appendChild(rightImgElement);
 }
 //returns previousImgs:
@@ -143,9 +146,60 @@ function handleImagesOnClick(event) {
     imgContainer.removeEventListener('click', handleImagesOnClick);
     //connected to function displayFinalResults up top
     displayFinalResults();
+    createChart();
   }
 }
 
+var imgNamesChart = [];
+var clicksForChart = [];
+var viewsForChart = [];
+
+function createChartData (){
+  for (var i = 0; i < allProducts.length; i++) {
+    imgNamesChart.push(allProducts[i].name);
+    clicksForChart.push(allProducts[i].clicks);
+    viewsForChart.push(allProducts[i].views);
+  }
+  console.log(imgNamesChart);
+  console.log(clicksForChart);
+  console.log(viewsForChart);
+}
+
+//Chart.js starts here
+function createChart(){
+  var ctx = document.getElementById('chart').getContext('2d');
+  createChartData();
+  //var data = allProducts[i].clicks;
+  var labelColors = 'blue';
+
+  var chartData = {
+    type: 'bar',
+    data: {
+      labels: imgNamesChart,
+      datasets: [{
+        label: 'Number of Views',
+        data: viewsForChart,
+        backgroundColor: labelColors,
+      },
+      {
+        label: 'Number of Votes',
+        data: clicksForChart,
+        backgroundColor: '#f58a07',
+      }],
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
+    }
+  };
+
+  var myChart = new Chart(ctx, chartData);
+}
 /* CLASS NOTES - 2/22 - below displayList();
 
   }else{
