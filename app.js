@@ -102,7 +102,7 @@ function generateImg() {
 
   var leftImgElement = document.createElement('img');
   leftImgElement.setAttribute('src', allProducts[previousImgs[0]].path);
-  leftImgElement.setAttribute('alt',allProducts[previousImgs[0]].name);
+  leftImgElement.setAttribute('id',allProducts[previousImgs[0]].name);
   allProducts[previousImgs[0]].views++;
   imgContainer.appendChild(leftImgElement);
 
@@ -122,6 +122,18 @@ function generateImg() {
 
 createProducts();
 generateImg();
+//getting our local storage back - only if there is something there to get back
+if (localStorage.allProducts) {
+  //declared localStorage.allProducts in eventHandler
+  var storedProductData = JSON.parse(localStorage.allProducts);
+  //for loop to pull from storedProductData
+  for (var i = 0; i < storedProductData.length; i++) {
+    //access allProducts[i] views and add storedProductData views to it
+    allProducts[i].views += storedProductData[i].views;
+    //access allProducts[i] clicks and add storedProductData clicks to it
+    allProducts[i].clicks += storedProductData[i].clicks;
+  }
+}
 
 //on-click Listener
 imgContainer.addEventListener('click', handleImagesOnClick);
@@ -129,7 +141,7 @@ imgContainer.addEventListener('click', handleImagesOnClick);
 function handleImagesOnClick(event) {
   console.log(event);
   for (var j = 0; j < allProducts.length; j++) {
-    if (event.target.alt === allProducts[j].name) {
+    if (event.target.id === allProducts[j].name) {
       allProducts[j].clicks += 1;
       console.log('allProducts[j]:', allProducts[j]);
     }
@@ -147,9 +159,11 @@ function handleImagesOnClick(event) {
     //connected to function displayFinalResults up top
     displayFinalResults();
     createChart();
+    //telling localStorage at allProducts put it into a string to send to localStorage
+    localStorage.allProducts = JSON.stringify(allProducts);
   }
 }
-
+//starts data for chart
 var imgNamesChart = [];
 var clicksForChart = [];
 var viewsForChart = [];
@@ -165,7 +179,7 @@ function createChartData (){
   console.log(viewsForChart);
 }
 
-//Chart.js starts here
+//Create chart starts here
 function createChart(){
   var ctx = document.getElementById('chart').getContext('2d');
   createChartData();
