@@ -193,12 +193,12 @@ function createChart(){
       datasets: [{
         label: 'Number of Views',
         data: viewsForChart,
-        backgroundColor: labelColors,
+        backgroundColor: '#52f2a6',
       },
       {
         label: 'Number of Votes',
         data: clicksForChart,
-        backgroundColor: '#f58a07',
+        backgroundColor: '#F06848',
       }],
     },
     options: {
